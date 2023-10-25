@@ -16,7 +16,7 @@ SceneManager = class
     print("Loading scene: " + sceneName)
     if CurrentScene == 0 then
       CurrentScene = CreateSceneObject(sceneName)
-      if CurrentScene == 0 then print("ERROR while loading scene!")
+      if CurrentScene == 0 then print("ERROR! while loading scene!")
       else print("Scene loaded!") end
     end
   end
@@ -25,6 +25,7 @@ SceneManager = class
   // @sceneName:string - name of the scene to load
   CreateSceneObject = function(sceneName)
     if sceneName == "CameraTest" then return new CameraTest() end
+    print("ERROR! Unable to create object scene of unrecognised name of '" + sceneName + "'")
     return 0
   end
   
