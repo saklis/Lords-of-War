@@ -1,3 +1,5 @@
+// MAIN - Game entry point
+
 // Scene Manager instance
 Scene = 0
 

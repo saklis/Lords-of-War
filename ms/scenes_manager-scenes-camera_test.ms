@@ -1,6 +1,7 @@
 // Test scene for camera development and testing
-CameraTest = class extends Scene
+CameraTestScene = class extends Scene
   
+//// constructor creates new instance of CameraTest scene  
   constructor = function()
     print("Creating new CameraTest scene...")
   end

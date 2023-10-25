@@ -2,15 +2,19 @@
 
 SceneManager = class
   
+//// constructor creating new instance of scene manager  
   constructor = function()
-    CurrentScene = 0
+    // reference to current scene
+    this.CurrentScene = 0
   end
   
+//// LoadDefaultScene load scene set as default one in game config
   LoadDefaultScene = function()
+    print("Creating default scene...")
     this.LoadScene(Config.DefaultSceneClass)
   end
   
-  //// LoadScene loads all assets required by the scene and is a stargin point for scene's logic
+//// LoadScene loads all assets required by the scene and is a stargin point for scene's logic
   // @sceneName:string - name of the scene to load
   LoadScene = function(sceneName)
     print("Loading scene: " + sceneName)
@@ -21,15 +25,18 @@ SceneManager = class
     end
   end
   
-  //// CreateSceneObject creates a object from class that is assigned to the supplied name
+//// CreateSceneObject creates a object from class that is assigned to the supplied name
   // @sceneName:string - name of the scene to load
   CreateSceneObject = function(sceneName)
-    if sceneName == "CameraTest" then return new CameraTest() end
+    if sceneName == "Blank" then return new BlankScene() end
+    if sceneName == "CameraTest" then return new CameraTestScene() end
     print("ERROR! Unable to create object scene of unrecognised name of '" + sceneName + "'")
     return 0
   end
-  
+
+//// Update calls update method for current scene  
   Update = function()
+    this.CurrentScene.Update()
   end
   
 end
