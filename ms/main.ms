@@ -19,4 +19,5 @@ end
 
 // MicroStudio.draw function
 draw = function()
+  Scene.Draw()
 end

@@ -1,9 +1,11 @@
 //// Blank scene for initialisation purposes
-BlankScene = class extends Scene
+BlankScene = class extends SceneBase
   
 //// constructor creates new instance of blank scene  
   constructor = function()
-    print("Creating new blank scene...")
+    super()
+    
+    this.Name = "Blank"
   end
   
 end
