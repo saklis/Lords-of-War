@@ -1,8 +1,6 @@
 // Global debug object to handle all printout to console
 Debug = object
   
-  
-  
 //// Info prints out the message.
   Info = function(message)
     print(message)

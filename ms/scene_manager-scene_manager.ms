@@ -6,6 +6,8 @@ SceneManager = class
   constructor = function()
     // reference to current scene
     this.CurrentScene = 0
+    
+    Debug.Info("Scene Manager created")
   end
   
 //// LoadDefaultScene load scene set as default one in game config

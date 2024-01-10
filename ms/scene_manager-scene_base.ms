@@ -56,6 +56,11 @@ SceneBase = class
   
 //// Draw draws all entities in this scene
   Draw = function()
+    for i = 0 to Config.EntitiesMaxNumber-1
+      if this.Entities[i] != 0 then
+        Camera.Register(i)
+      end
+    end
   end
 
 end

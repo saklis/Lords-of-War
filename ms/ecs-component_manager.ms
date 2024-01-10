@@ -17,7 +17,7 @@ ComponentManager = class
   
 //// Create new component
   // @entityId:int - Id of the entity that will have Component attached
-  // @componentClass:class:Component - class of the component to create
+  // @componentClass:Component - class of the component to create
   CreateComponent = function(entityId, componentClass)
     Debug.Log("Creating component. entity:" + entityId + "; class:" + componentClass)
     
@@ -31,6 +31,13 @@ ComponentManager = class
   // @returns:int - number of all components
   CountAll = function()
     return 42 // mock
+  end
+  
+//// GetTransform returns Transform Component for Entity with provided Id.
+  // @entityId:int - Id of Entity
+  // @returns Transform Component of the Entity
+  GetTransform = function(entityId)
+    return this.Transforms[entityId]
   end
   
 end
