@@ -11,6 +11,6 @@ Entity = class
     
     this.Name = name + "_" + Id
     
-    if Config.Debug then Debug.Log("New Entity created! Id:" + this.Id + "; Name:" + this.Name) end
+    Debug.Log("Entity created! Id:" + this.Id + "; Name:" + this.Name)
   end
 end

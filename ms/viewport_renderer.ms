@@ -3,9 +3,6 @@
 ViewportRenderer = class
   
   constructor = function()
-    // Entities that will be drawn on the screen
-    this.Entities = []
-    
     // "camera" position in the scene
     this.Position = new Vector(0, 0)
     
@@ -19,23 +16,14 @@ ViewportRenderer = class
     this.MovementSpeed = 0.5
     
     // value of mouse.x and mouse.y that trigger camera movement
-    this.MouseMoveThreshold = new Vector(100, 90)
+    // TODO: figure out best numbers based on the screen's size
+    this.MouseMoveThreshold = new Vector(140, 80)
     
     Debug.Info("Viewport Renderer created")
     Debug.Info("Viewport's Culling Distance set to: " + this.CullingDistance)
     Debug.Info("Viewport's Movement enabled?: " + this.EnableMovement)
     Debug.Info("Viewport's Movement Speed: " + this.MovementSpeed)
     Debug.Info("Viewport's Move threshold for mouse: x:" + this.MouseMoveThreshold.X + "; y: " + MouseMoveThreshold.Y)
-  end
-  
-//// Register checks if provided entity should be drawn on the screen
-  // @entityId:int - Id of the Entity to check
-  Register = function(entityId)
-    transform = Scene.CurrentScene.Components.GetTransform(entityId)
-    distance = this.Position.ChebyshevDistance(transform.Position)
-    if distance <= this.CullingDistance then
-      this.Entities.push(entityId)
-    end
   end
   
 //// Update state of Viewport Renderer
@@ -58,23 +46,34 @@ ViewportRenderer = class
   
 //// Draw all registered Entities
   Draw = function()
-    if Config.Debug then
-      // draw Culling Distance
-      screen.drawRect(0, 0, this.CullingDistance * 2, this.CullingDistance * 2, "rgb(255,0,0)")
-      // draw Mouse Movement Thresholds
-      screen.drawRect(0, 0, this.MouseMoveThreshold.X * 2, this.MouseMoveThreshold.Y * 2, "rgb(0,255,0)")
+    // draw all Entities
+    for i = 0 to Config.EntitiesMaxCount-1
+      if Scene.CurrentScene.Entities[i] != 0 then
+        transform = Scene.CurrentScene.Components.GetTransform(i)
+        
+        // check if transform is within allowed distance
+        distance = this.Position.ChebyshevDistance(transform.Position)
+        if distance <= this.CullingDistance then
+          
+          // calculate position relative to the viewport
+          position = transform.Position - this.Position
+          
+          // temp drawing, since there's no Sprite Component yet
+          screen.fillRect(position.X, position.Y, 10, 10, "rgb(255,255,255)")
+        end
+      end
     end
     
-    // draw all registered Entities
-    while this.Entities.length > 0
-      entityId = this.Entities.pop()
-      transform = Scene.CurrentScene.Components.GetTransform(entityId)
-      
-      // calculate position relative to the viewport
-      position = transform.Position - this.Position
-      
-      // temp drawing, since there's no Sprite Component yet
-      screen.fillRect(position.X, position.Y, 10, 10, "rgb(255,255,255)")
+    // draw debug info on top of everything
+    if Config.Debug then
+      // draw Culling Distance
+      cullingDistanceColour = "rgb(255,0,0)"
+      screen.drawText("culling distance", 0, this.CullingDistance+3, 5, cullingDistanceColour)
+      screen.drawRect(0, 0, this.CullingDistance * 2, this.CullingDistance * 2, cullingDistanceColour)
+      // draw Mouse Movement Thresholds
+      mouseMovementThresholdColour = "rgb(0,255,0)"
+      screen.drawText("pan camera border", 0, this.MouseMoveThreshold.Y+3, 5, mouseMovementThresholdColour)
+      screen.drawRect(0, 0, this.MouseMoveThreshold.X * 2, this.MouseMoveThreshold.Y * 2, mouseMovementThresholdColour)
     end
   end
   

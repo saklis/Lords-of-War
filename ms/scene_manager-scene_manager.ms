@@ -25,18 +25,19 @@ SceneManager = class
       if this.CurrentScene == 0 then Debug.Error("While loading scene!")
       else 
         Debug.Info("Scene loaded! Current scene: " + this.CurrentScene.Name)
-        Debug.Info("Entities list size: " + this.CurrentScene.Entities.length)
-        Debug.Info("Components loaded count: " + this.CurrentScene.Components.CountAll())
+        Debug.Info("Entities count: " + this.CurrentScene.EntitiesCount() + "/" + Config.EntitiesMaxCount)
+        Debug.Info("Components count: " + this.CurrentScene.Components.CountAll())
       end
     end
   end
   
 //// CreateSceneObject creates a object from class that is assigned to the supplied name
   // @sceneName:string - name of the scene to load
+  // @returns instance of the scene class. Returns 0 in case of error
   CreateSceneObject = function(sceneName)
     if sceneName == "Blank" then return new BlankScene() end
     if sceneName == "CameraTest" then return new CameraTestScene() end
-    Debug.Error("Unable to create object scene of unrecognised name: '" + sceneName + "'")
+    Debug.Error("Unable to create scene object. Scene name '"+ sceneName +"' not recognised.")
     return 0
   end
 

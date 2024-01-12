@@ -15,7 +15,7 @@ SceneBase = class
     // INITIALISE
     
     // Init Entity list
-    for i = 0 to Config.EntitiesMaxNumber-1
+    for i = 0 to Config.EntitiesMaxCount-1
       this.Entities.push(0)
     end
   end
@@ -27,7 +27,7 @@ SceneBase = class
     newEntityId = -1
     
     // find empty space in entity list
-    for i = 0 to Config.EntitiesMaxNumber-1
+    for i = 0 to Config.EntitiesMaxCount-1
       if this.Entities[i] == 0 then
         newEntityId = i
         break
@@ -37,7 +37,7 @@ SceneBase = class
     if newEntityId != -1 then
       this.Entities[newEntityId] = new Entity(newEntityId, name)
     else
-      Debug.Error("While creating new Entity - there's no free space.")
+      Debug.Error("No space for new Entity")
     end
     
     return newEntityId
@@ -50,17 +50,28 @@ SceneBase = class
     this.Components.CreateComponent(entityId, componentClass)
   end
   
+//// EntitiesCount returns number of Entities in the scene
+  // @returns number of Entities
+  EntitiesCount = function()
+    entitiesCount = 0
+    for i = 0 to Config.EntitiesMaxCount-1
+      if this.Entities[i] != 0 then entitiesCount += 1 end
+    end
+    
+    return entitiesCount
+  end
+  
 //// Update updates all entities in this scene
   Update = function()
+    for i = 0 to Config.EntitiesMaxCount-1
+      if this.Entities[i] != 0 then
+        // update all components
+      end
+    end
   end
   
 //// Draw draws all entities in this scene
   Draw = function()
-    for i = 0 to Config.EntitiesMaxNumber-1
-      if this.Entities[i] != 0 then
-        Camera.Register(i)
-      end
-    end
   end
 
 end

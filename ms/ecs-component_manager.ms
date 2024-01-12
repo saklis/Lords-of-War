@@ -10,7 +10,7 @@ ComponentManager = class
     // INITIALISE
     
     // init Transform Component's list
-    for i = 0 to Config.EntitiesMaxNumber-1
+    for i = 0 to Config.EntitiesMaxCount-1
       this.Transforms.push(0)
     end
   end
@@ -19,18 +19,21 @@ ComponentManager = class
   // @entityId:int - Id of the entity that will have Component attached
   // @componentClass:Component - class of the component to create
   CreateComponent = function(entityId, componentClass)
-    Debug.Log("Creating component. entity:" + entityId + "; class:" + componentClass)
-    
     // is Transform Component
     if TransformComponent == componentClass then
       this.Transforms[entityId] = new TransformComponent()
+      Debug.Log("Transform Component created for entity: " + entityId)
     end
   end
   
 //// CountAll() counts and returns the number of all existing components
   // @returns:int - number of all components
   CountAll = function()
-    return 42 // mock
+    transformsCount = 0
+    for i = 0 to Config.EntitiesMaxCount-1
+      if this.Transforms[i] != 0 then transformsCount += 1 end
+    end
+    return transformsCount
   end
   
 //// GetTransform returns Transform Component for Entity with provided Id.
