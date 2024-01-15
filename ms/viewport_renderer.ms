@@ -3,7 +3,7 @@
 ViewportRenderer = class
   
   constructor = function()
-    // "camera" position in the scene
+    // "camera" position in the scene (World Space)
     this.Position = new Vector(0, 0)
     
     // distance from Position at which Entities won't be drawn anymore
@@ -55,11 +55,11 @@ ViewportRenderer = class
         distance = this.Position.ChebyshevDistance(transform.Position)
         if distance <= this.CullingDistance then
           
-          // calculate position relative to the viewport
-          position = transform.Position - this.Position
+          // calculate camera's local position (relative to the viewport)
+          localPosition = transform.Position - this.Position
           
           // temp drawing, since there's no Sprite Component yet
-          screen.fillRect(position.X, position.Y, 10, 10, "rgb(255,255,255)")
+          screen.fillRect(localPosition.X, localPosition.Y, 10, 10, "rgb(255,255,255)")
         end
       end
     end

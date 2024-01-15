@@ -6,3 +6,5 @@ Inspired by Warlords III: Reign of Heroes and Darklords Rising by Steve Fawkner 
 <hr/>
 
 Lords of War on GitHub: https://github.com/saklis/Lords-of-War
+
+Lords of War on YouTube: https://www.youtube.com/playlist?list=PLfvzVqACVYibFrxvueDnHgUkPAkVSc_-Y
