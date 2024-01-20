@@ -48,6 +48,7 @@ ViewportRenderer = class
   Draw = function()
     // draw all Entities
     for i = 0 to Config.EntitiesMaxCount-1
+      // check all entities
       if Scene.CurrentScene.Entities[i] != 0 then
         transform = Scene.CurrentScene.Components.GetTransform(i)
         
