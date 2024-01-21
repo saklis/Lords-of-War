@@ -28,7 +28,10 @@ ViewportRenderer = class
   
 //// Update state of Viewport Renderer
   Update = function()
+    // move viewport
     if this.EnableMovement then
+      
+      // move when mouse cursor is outside of thresholds
       if mouse.x > this.MouseMoveThreshold.X then
         this.Position.X += this.MovementSpeed
       end
