@@ -1,5 +1,5 @@
 // Component that hold info about position rotation and scale in the scene
-TransformComponent = class extends Component
+TransformComponent = class extends ComponentBase
   
 //// constructor creates new instance of Transform Component
   constructor = function()
