@@ -30,6 +30,5 @@ end
 // MicroStudio.draw function
 draw = function()
   screen.clear()
-  Scene.Draw()
   Camera.Draw()
 end

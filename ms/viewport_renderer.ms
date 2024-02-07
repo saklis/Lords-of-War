@@ -53,17 +53,24 @@ ViewportRenderer = class
     for i = 0 to Config.EntitiesMaxCount-1
       // check all entities
       if Scene.CurrentScene.Entities[i] != 0 then
-        transform = Scene.CurrentScene.Components.GetTransform(i)
-        
-        // check if transform is within allowed distance
-        distance = this.Position.ChebyshevDistance(transform.Position)
-        if distance <= this.CullingDistance then
+        // check if entity has Sprite Component for drawing
+        local spriteComponent = Scene.CurrentScene.Components.GetSprite(i)
+        if spriteComponent != 0 then
+          // calculate distance from camera
+          local transform = Scene.CurrentScene.Components.GetTransform(i)
+          local distance = this.Position.ChebyshevDistance(transform.Position)
           
-          // calculate camera's local position (relative to the viewport)
-          localPosition = transform.Position - this.Position
+          // check if transform is within allowed distance
+          if distance <= this.CullingDistance then
+            // calculate camera's local position (relative to the viewport)
+            local localPosition = transform.Position - this.Position
+            
+            // get sprite object
+            local sprite = sprites[spriteComponent.Name]
           
-          // temp drawing, since there's no Sprite Component yet
-          screen.fillRect(localPosition.X, localPosition.Y, 10, 10, "rgb(255,255,255)")
+            // draw sprite component for this entity
+            screen.drawSprite(sprite.name, localPosition.X, localPosition.Y, sprite.width, sprite.height)
+          end
         end
       end
     end
@@ -71,11 +78,11 @@ ViewportRenderer = class
     // draw debug info on top of everything
     if Config.Debug then
       // draw Culling Distance
-      cullingDistanceColour = "rgb(255,0,0)"
+      local cullingDistanceColour = "rgb(255,0,0)"
       screen.drawText("culling distance", 0, this.CullingDistance+3, 5, cullingDistanceColour)
       screen.drawRect(0, 0, this.CullingDistance * 2, this.CullingDistance * 2, cullingDistanceColour)
       // draw Mouse Movement Thresholds
-      mouseMovementThresholdColour = "rgb(0,255,0)"
+      local mouseMovementThresholdColour = "rgb(0,255,0)"
       screen.drawText("pan camera border", 0, this.MouseMoveThreshold.Y+3, 5, mouseMovementThresholdColour)
       screen.drawRect(0, 0, this.MouseMoveThreshold.X * 2, this.MouseMoveThreshold.Y * 2, mouseMovementThresholdColour)
     end

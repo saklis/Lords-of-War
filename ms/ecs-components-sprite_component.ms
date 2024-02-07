@@ -5,6 +5,10 @@ SpriteComponent = class extends ComponentBase
   constructor = function()
     super()
     
-    SpriteType
+    // Name of the sprite file to display
+    this.Name = ""
+    
+    // Type of sprite. Will impact drawing
+    this.Type = SpriteType.Ground
   end
 end

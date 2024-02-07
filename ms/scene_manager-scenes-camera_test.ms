@@ -15,11 +15,18 @@ CameraTestScene = class extends SceneBase
   end
   
   DEBUG_MakeEntity = function(x, y)
-    entityId = this.AddEntity("MyEntity")
+    local entityId = this.AddEntity("MyEntity")
+    
     this.AddComponent(entityId, TransformComponent)
-    transform = this.Components.GetTransform(entityId)
+    local transform = this.Components.GetTransform(entityId)
     transform.Position.X = x
     transform.Position.Y = y
+    
+    this.AddComponent(entityId, SpriteComponent)
+    local sprite = this.Components.GetSprite(entityId)
+    
+    sprite.Name = "unit"
+    sprite.Type = SpriteType.Unit
   end
   
 end

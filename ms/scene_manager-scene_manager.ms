@@ -48,11 +48,4 @@ SceneManager = class
     end
   end
   
-//// Draw calls draw method for current scene
-  Draw = function()
-    if this.CurrentScene != 0 then
-      this.CurrentScene.Draw()
-    end
-  end
-  
 end

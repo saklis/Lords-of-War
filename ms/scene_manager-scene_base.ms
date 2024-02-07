@@ -24,7 +24,7 @@ SceneBase = class
   // @name:string - name of new entity
   // @returns - id of the new Entity. -1 in case of an error
   AddEntity = function(name = "Entity")
-    newEntityId = -1
+    local newEntityId = -1
     
     // find empty space in entity list
     for i = 0 to Config.EntitiesMaxCount-1
@@ -53,7 +53,7 @@ SceneBase = class
 //// EntitiesCount returns number of Entities in the scene
   // @returns number of Entities
   EntitiesCount = function()
-    entitiesCount = 0
+    local entitiesCount = 0
     for i = 0 to Config.EntitiesMaxCount-1
       if this.Entities[i] != 0 then entitiesCount += 1 end
     end
@@ -68,10 +68,6 @@ SceneBase = class
         // update all components
       end
     end
-  end
-  
-//// Draw draws all entities in this scene
-  Draw = function()
   end
 
 end
