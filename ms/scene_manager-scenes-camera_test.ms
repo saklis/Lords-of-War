@@ -7,14 +7,15 @@ CameraTestScene = class extends SceneBase
     
     this.Name = "CameraTest"
     
-    DEBUG_MakeEntity(0, 0)
-    DEBUG_MakeEntity(20, 30)
-    DEBUG_MakeEntity(-30, -20)
-    DEBUG_MakeEntity(-15, 25)
-    DEBUG_MakeEntity(40, -20)
+    DEBUG_MakeMap()
+    DEBUG_MakeUnit(0, 0)
+    // DEBUG_MakeUnit(20, 30)
+    // DEBUG_MakeUnit(-30, -20)
+    // DEBUG_MakeUnit(-15, 25)
+    // DEBUG_MakeUnit(40, -20)
   end
   
-  DEBUG_MakeEntity = function(x, y)
+  DEBUG_MakeUnit = function(x, y)
     local entityId = this.AddEntity("MyEntity")
     
     this.AddComponent(entityId, TransformComponent)
@@ -27,6 +28,22 @@ CameraTestScene = class extends SceneBase
     
     sprite.Name = "unit"
     sprite.Type = SpriteType.Unit
+  end
+  
+  DEBUG_MakeMap = function()
+    local entityId = this.AddEntity("MyEntity")
+    
+    // Map Entity don't need Transform Component - it won't move and is always rendered at (0,0)
+    
+    // this.AddComponent(entityId, TransformComponent)
+    // local transform = this.Components.GetTransform(entityId)
+    // transform.Position.X = x
+    // transform.Position.Y = y
+    
+    this.AddComponent(entityId, SpriteComponent)
+    local sprite = this.Components.GetSprite(entityId)
+    
+    sprite.InitAsMap("myfirstmap")
   end
   
 end

@@ -10,7 +10,5 @@ Entity = class
     this.Id = id
     
     this.Name = name + "_" + Id
-    
-    Debug.Log("Entity created! Id:" + this.Id + "; Name:" + this.Name)
   end
 end

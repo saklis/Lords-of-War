@@ -26,13 +26,11 @@ ComponentManager = class
     // is Transform Component
     if TransformComponent == componentClass then
       this.Transforms[entityId] = new TransformComponent()
-      Debug.Log("Transform Component created for entity: " + entityId)
     end
     
     // is Sprite Component
     if SpriteComponent == componentClass then
       this.Sprites[entityId] = new SpriteComponent()
-      Debug.Log("Sprite Component created for entity: " + entityId)
     end
   end
   

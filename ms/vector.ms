@@ -45,4 +45,10 @@ Vector = class
   ChebyshevDistance = function(other)
     return max(abs(other.X - this.X), abs(other.Y - this.Y))
   end
+  
+//// ToString returns a string representation of the Vector
+  // @returns string representing the Vector
+  ToString = function()
+    return "X: " + this.X + "; Y: " + this.Y
+  end
 end
