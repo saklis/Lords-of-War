@@ -9,7 +9,7 @@ SpriteComponent = class extends ComponentBase
     this.Name = ""
     
     // Type of sprite. Will impact drawing
-    this.Type = SpriteType.Unit
+    this.Type = SpriteType.Default
     
     // ### Map sizes only available if this.Type == SpriteType.Map
     
@@ -22,8 +22,21 @@ SpriteComponent = class extends ComponentBase
     this.HalfMapHeightUnits = 0
   end
   
+//// InitAsUnit initializes all field of Sprite Component as representation of unit
+  // @unitName:string - name of the unit's sprite
+  InitAsUnit = function(unitName)
+    this.Name = unitName
+    this.Type = SpriteType.Unit
+    
+    // check if sprite exists
+    local sprite = sprites[this.Name]
+    if unit == 0 then
+      Debug.Error("Creating a Unit Sprite for '"+this.Name+"' but it is not present in [sprites] array!")
+    end
+  end
+  
 //// InitAsMap initializes all fields of this Sprite Component as a representation of map.
-  // @mapName - name of map folder
+  // @mapName:string - name of map folder
   InitAsMap = function(mapName)
     this.Name = mapName
     this.Type = SpriteType.Map

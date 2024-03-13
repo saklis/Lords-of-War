@@ -67,7 +67,15 @@ ViewportRenderer = class
         if spriteComponent != 0 then
           
           // switch by Sprite Type
-          // unit
+          
+          // case DEFAULT
+          if SpriteType.Default == spriteComponent.Type then
+            // There should not be any Sprite Components of Default type.
+            // It likely means this component is not initialized.
+            Debug.Error("Sprite Component of type 'Default' found in the scene. This should not be happening!")
+          end
+          
+          // case UNIT
           if SpriteType.Unit == spriteComponent.Type then
             // calculate distance from camera
             local transform = Scene.CurrentScene.Components.GetTransform(i)
@@ -87,7 +95,7 @@ ViewportRenderer = class
             end
           end
           
-          // map
+          // case MAP
           if SpriteType.Map == spriteComponent.Type then
             // get map object for ground layer
             local mapName = spriteComponent.Name + "/ground"
@@ -98,9 +106,9 @@ ViewportRenderer = class
                                                     floor(this.Position.Y / map.block_height) + spriteComponent.HalfMapHeight)
               local mapCullDistance = this.CullingDistance / map.block_width
               
-              local minX = floor(cameraMapPosition.X - mapCullDistance + 1)
+              local minX = ceil(cameraMapPosition.X - mapCullDistance)
               local maxX = ceil(cameraMapPosition.X + mapCullDistance)
-              local minY = floor(cameraMapPosition.Y - mapCullDistance + 1)
+              local minY = ceil(cameraMapPosition.Y - mapCullDistance)
               local maxY = ceil(cameraMapPosition.Y + mapCullDistance)
               
               for x = minX to maxX by 1
