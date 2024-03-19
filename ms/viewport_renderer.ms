@@ -101,9 +101,12 @@ ViewportRenderer = class
             local mapName = spriteComponent.Name + "/ground"
             local map = maps[mapName]
             if map != 0 then
+              // translate camera's World Space lcoation into Map Space
               local cameraMapPosition = new Vector(
                                                     floor(this.Position.X / map.block_width) + spriteComponent.HalfMapWidth,
                                                     floor(this.Position.Y / map.block_height) + spriteComponent.HalfMapHeight)
+                                                  
+              // calcualte culling range in Map Blocks
               local mapCullDistance = this.CullingDistance / map.block_width
               
               local minX = ceil(cameraMapPosition.X - mapCullDistance)
@@ -111,6 +114,7 @@ ViewportRenderer = class
               local minY = ceil(cameraMapPosition.Y - mapCullDistance)
               local maxY = ceil(cameraMapPosition.Y + mapCullDistance)
               
+              // Draw everything within culling range
               for x = minX to maxX by 1
                 for y = minY to maxY by 1
                   
