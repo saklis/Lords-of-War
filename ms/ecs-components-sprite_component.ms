@@ -30,7 +30,7 @@ SpriteComponent = class extends ComponentBase
     
     // check if sprite exists
     local sprite = sprites[this.Name]
-    if unit == 0 then
+    if sprite == 0 then
       Debug.Error("Creating a Unit Sprite for '"+this.Name+"' but it is not present in [sprites] array!")
     end
   end

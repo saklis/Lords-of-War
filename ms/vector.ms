@@ -24,7 +24,7 @@ Vector = class
     return new Vector(a.X + b.X, a.Y + b.Y)
   end
   
-//// - operator creates new Vector which is a diference of two provided Vectors
+//// - operator creates new Vector which is a difference of two provided Vectors
   // @a:Vector - first Vector
   // @b:Vector - second Vector
   // @returns new Vector which is a diference of two

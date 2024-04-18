@@ -19,6 +19,7 @@ ViewportRenderer = class
     // TODO: figure out best numbers based on the screen's size
     this.MouseMoveThreshold = new Vector(140, 80)
     
+    // Handle rendering tasks for current frame
     this.RenderingQueue = new RenderingTaskQueue()
     
     Debug.Info("Viewport Renderer created")
@@ -42,6 +43,7 @@ ViewportRenderer = class
       end
       if mouse.y > this.MouseMoveThreshold.Y then
         this.Position.Y += this.MovementSpeed
+        
       end
       if mouse.y < -this.MouseMoveThreshold.Y then
         this.Position.Y -= this.MovementSpeed
