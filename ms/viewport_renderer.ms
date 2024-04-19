@@ -33,7 +33,6 @@ ViewportRenderer = class
   Update = function()
     // move viewport
     if this.EnableMovement then
-      
       // move when mouse cursor is outside of thresholds
       if mouse.x > this.MouseMoveThreshold.X then
         this.Position.X += this.MovementSpeed
@@ -63,9 +62,9 @@ ViewportRenderer = class
     // build rendering queue for current frame
     for i = 0 to Config.EntitiesMaxCount-1
       // check all entities
-      if Scene.CurrentScene.Entities[i] != 0 then
+      if Scene.Current.Entities[i] != 0 then
         // check if entity has Sprite Component for drawing
-        local spriteComponent = Scene.CurrentScene.Components.GetSprite(i)
+        local spriteComponent = Scene.Current.Components.GetSprite(i)
         if spriteComponent != 0 then
           
           // switch by Sprite Type
@@ -80,7 +79,7 @@ ViewportRenderer = class
           // case UNIT
           if SpriteType.Unit == spriteComponent.Type then
             // calculate distance from camera
-            local transform = Scene.CurrentScene.Components.GetTransform(i)
+            local transform = Scene.Current.Components.GetTransform(i)
             local distance = this.Position.ChebyshevDistance(transform.Position)
             
             // check if transform is within allowed distance
@@ -189,6 +188,14 @@ ViewportRenderer = class
       screen.drawText("pan camera border", 0, this.MouseMoveThreshold.Y+3, 5, mouseMovementThresholdColour)
       screen.drawRect(0, 0, this.MouseMoveThreshold.X * 2, this.MouseMoveThreshold.Y * 2, mouseMovementThresholdColour)
     end
+  end
+  
+//// ToWorldCoords transforms provided coords from camera's local space into world space
+  // @x:float - X-axis component of coordinate to translate
+  // @y:float - Y-axis component of coordinate to translate
+  // @returns:Vector - a vector that holds coords in World Space
+  ToWorldCoords = function(x, y)
+    return new Vector(this.Position.X + x, this.Position.Y + y)
   end
   
 end

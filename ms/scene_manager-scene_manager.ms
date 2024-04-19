@@ -5,7 +5,7 @@ SceneManager = class
 //// constructor creating new instance of scene manager  
   constructor = function()
     // reference to current scene
-    this.CurrentScene = 0
+    this.Current = 0
     
     Debug.Info("Scene Manager created")
   end
@@ -20,13 +20,13 @@ SceneManager = class
   // @sceneName:string - name of the scene to load
   LoadScene = function(sceneName)
     Debug.Info("Loading scene: " + sceneName)
-    if this.CurrentScene == 0 then
-      this.CurrentScene = this.CreateSceneObject(sceneName)
-      if this.CurrentScene == 0 then Debug.Error("While loading scene!")
+    if this.Current == 0 then
+      this.Current = this.CreateSceneObject(sceneName)
+      if this.Current == 0 then Debug.Error("While loading scene!")
       else 
-        Debug.Info("Scene loaded! Current scene: " + this.CurrentScene.Name)
-        Debug.Info("Entities count: " + this.CurrentScene.EntitiesCount() + "/" + Config.EntitiesMaxCount)
-        Debug.Info("Components count: " + this.CurrentScene.Components.CountAll())
+        Debug.Info("Scene loaded! Current scene: '"+this.Current.Name+"' / UI Design: '"+this.Current.UI.Name+"'")
+        Debug.Info("Entities count: " + this.Current.EntitiesCount() + "/" + Config.EntitiesMaxCount)
+        Debug.Info("Components count: " + this.Current.Components.CountAll())
       end
     end
   end
@@ -43,8 +43,8 @@ SceneManager = class
 
 //// Update calls update method for current scene  
   Update = function()
-    if this.CurrentScene != 0 then
-      this.CurrentScene.Update()
+    if this.Current != 0 then
+      this.Current.Update()
     end
   end
   

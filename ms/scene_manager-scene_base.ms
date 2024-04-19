@@ -12,6 +12,9 @@ SceneBase = class
     // Components of entities
     this.Components = new ComponentManager()
     
+    // UI Design for this scene
+    this.UI = 0
+    
     // INITIALISE
     
     // Init Entity list
@@ -63,11 +66,25 @@ SceneBase = class
   
 //// Update updates all entities in this scene
   Update = function()
+    // update UI
+    if this.UI != 0 then
+      this.UI.Update()
+    end
+    
+    // update entities/components
     for i = 0 to Config.EntitiesMaxCount-1
       if this.Entities[i] != 0 then
         // update all components
       end
     end
+  end
+  
+//// AddUIDesign registers the providded UI Design as UI for this scene.
+  // @uiDesign : UIDesignBase - reference to UI Design object that will handele UI for this scene
+  AddUIDesign = function(uiDesign)
+    this.UI = uiDesign
+    this.UI.Scene = this
+    Debug.Log("UI Design '"+this.UI.Name+"' added to scene '"+this.Name+"'.")
   end
 
 end

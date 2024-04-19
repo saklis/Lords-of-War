@@ -49,8 +49,8 @@ SpriteComponent = class extends ComponentBase
       this.HalfMapWidthUnits = ground.width * ground.block_width / 2
       this.HalfMapHeightUnits = ground.height * ground.block_height / 2
       Debug.Info("Map sprite '"+this.Name+"' loaded.")
-      Debug.Info("> Half width: "+this.HalfMapWidth+"; Half height: "+this.HalfMapHeight)
-      Debug.Info("> Half width units: "+this.HalfMapWidthUnits+"; Half height units: "+this.HalfMapHeightUnits)
+      Debug.Log("Half width: "+this.HalfMapWidth+"; Half height: "+this.HalfMapHeight)
+      Debug.Log("Half width units: "+this.HalfMapWidthUnits+"; Half height units: "+this.HalfMapHeightUnits)
     else
       Debug.Error("Creating a Map Sprite for name '"+this.Name+"' but ground layer not found!")
     end

@@ -13,6 +13,10 @@ init = function()
   Debug.Info("-config- Entities max count: " + Config.EntitiesMaxCount)
   Debug.Info("-config- Default scene: " + Config.DefaultSceneClass)
   
+  // Game runs of fixed update
+  DeltaTime = 1/60
+  Debug.Info("Delat time of update method: " + DeltaTime)
+  
   // init global objects
   Scene = new SceneManager()
   Camera = new ViewportRenderer()
