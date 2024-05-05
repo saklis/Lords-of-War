@@ -38,15 +38,37 @@ UIDesignBase = class
     for i = 0 to Config.EntitiesMaxCount-1
       if this.Scene.Entities[i] != 0 then
         local transform = this.Scene.Components.GetTransform(i)
-        local distance = transform.Position.ChebyshevDistance(worldPosition)
-        
-        if distance < HitDistance then Debug.Log("UNIT CLICKED!")
-        else Debug.Log("nothing clicked") end
+        if transform != 0 then
+          local distance = transform.Position.ChebyshevDistance(worldPosition)
+          if distance < HitDistance then 
+            Debug.Log("UNIT CLICKED!")
+            return
+          end
+        end
       end
     end
     
     // CHECK MAP
-    
-    // TODO: handle clicking on map tile
+      
+    local MapSpriteComponent = Scene.GetMap()
+    if MapSpriteComponent != 0 then
+      // get ref to map object
+      local map = maps[MapSpriteComponent.Name + "/ground"] // TODO: add support for other layers
+      
+      // translate world space to map space
+      local mapPosition = new Vector(
+          MapSpriteComponent.HalfMapWidth + floor(worldPosition.X / map.block_width + 0.5),
+          MapSpriteComponent.HalfMapHeight +  floor(worldPosition.Y / map.block_height + 0.5)
+        )
+        
+      // TODO: insert checking other layers here - the Map Position should be valid for all of them
+                                          
+      local spriteName = map.get(mapPosition.X, mapPosition.Y)
+      if spriteName != 0 then
+        Debug.Log("MAP CLICKED! Tile type: " + spriteName)
+      end
+    else
+      Debug.Error("Unable to get reference to Map Sprite Component. Is this a scene without a map?")
+    end
   end
 end

@@ -7,7 +7,7 @@ CameraTestScene = class extends SceneBase
     
     this.Name = "CameraTest"
     
-    //DEBUG_MakeMap()
+    DEBUG_MakeMap()
     DEBUG_MakeUnit(0, 0)
     // DEBUG_MakeUnit(20, 30)
     // DEBUG_MakeUnit(-30, -20)

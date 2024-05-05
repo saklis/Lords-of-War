@@ -10,6 +10,9 @@ ComponentManager = class
     // Sprite components
     this.Sprites = []
     
+    // Cashes reference to map Sprite Component
+    this.Map = 0
+    
     // INITIALISE
     
     // init Transform Component's list
@@ -58,6 +61,23 @@ ComponentManager = class
   // @returns Sprite Component of the Entity
   GetSprite = function(entityId)
     return this.Sprites[entityId]
+  end
+  
+//// GetMap returns a reference to map's Sprite Component. If there's more than one, first will be returned.
+  // @returns map's Sprite Component. 0 if Sprite Component was not found.
+  GetMap = function()
+    if Map != 0 then
+      return Map
+    else
+      for i = 0 to Config.EntitiesMaxCount-1
+        if this.Sprites[i] != 0 and this.Sprites[i].Type == SpriteType.Map then
+          Map = this.Sprites[i]
+          return this.Sprites[i]
+        end
+      end
+    end
+    
+    return 0
   end
   
 end

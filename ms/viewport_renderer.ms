@@ -59,6 +59,8 @@ ViewportRenderer = class
       this.RenderingQueue.Clear()
     end
     
+    // RENDERING TASKS
+    
     // build rendering queue for current frame
     for i = 0 to Config.EntitiesMaxCount-1
       // check all entities
@@ -104,8 +106,9 @@ ViewportRenderer = class
             if map != 0 then
               // translate camera's World Space lcoation into Map Space
               local cameraMapPosition = new Vector(
-                                                    floor(this.Position.X / map.block_width) + spriteComponent.HalfMapWidth,
-                                                    floor(this.Position.Y / map.block_height) + spriteComponent.HalfMapHeight)
+                  floor(this.Position.X / map.block_width) + spriteComponent.HalfMapWidth,
+                  floor(this.Position.Y / map.block_height) + spriteComponent.HalfMapHeight
+                )
                                                   
               // calcualte culling range in Map Blocks
               local mapCullDistance = this.CullingDistance / map.block_width
@@ -155,6 +158,8 @@ ViewportRenderer = class
     
     local renderingTaskCount = 0
     if Config.Debug then renderingTaskCount = this.RenderingQueue.Count() end
+    
+    // DRAWING
     
     // render all tasks from queue
     while this.RenderingQueue.HasTasks()

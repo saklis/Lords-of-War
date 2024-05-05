@@ -53,6 +53,12 @@ SceneBase = class
     this.Components.CreateComponent(entityId, componentClass)
   end
   
+//// GetMap returns a reference to map's Sprite Component. If there's more than one, first will be returned.
+  // @returns map's Sprite Component. 0 if Sprite Component was not found.
+  GetMap = function()
+    return Components.GetMap()
+  end
+  
 //// EntitiesCount returns number of Entities in the scene
   // @returns number of Entities
   EntitiesCount = function()
