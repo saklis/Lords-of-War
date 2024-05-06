@@ -9,12 +9,12 @@ CameraTestScene = class extends SceneBase
     
     DEBUG_MakeMap()
     DEBUG_MakeUnit(0, 0)
-    // DEBUG_MakeUnit(20, 30)
+    DEBUG_MakeUnit(20, 30)
     // DEBUG_MakeUnit(-30, -20)
     // DEBUG_MakeUnit(-15, 25)
     // DEBUG_MakeUnit(40, -20)
     
-    this.AddUIDesign(new UIDesignBase())
+    this.AddUIDesign(new TestUiDesign())
   end
   
   DEBUG_MakeUnit = function(x, y)

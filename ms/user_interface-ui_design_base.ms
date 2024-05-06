@@ -12,6 +12,11 @@ UIDesignBase = class
     
     // distance below which Entity is considered "hit"
     this.HitDistance = 9
+    
+    // width of the UI panel.
+    this.UiWidth = 0
+    
+    this.SelectedUnitId = -1
   end
   
 //// Update state of the UI Design
@@ -19,6 +24,11 @@ UIDesignBase = class
     if mouse.press == 1 and mouse.left == 1 then
       HitTrace(mouse.x, mouse.y)
     end
+  end
+  
+//// Draw draws UI
+  Draw = function()
+    screen.fillRect(180 - this.UiWidth / 2, 0, this.UiWidth, 200, "rgb(255,0,255)")
   end
   
 //// HitTrace returns an object with information about 'thing' that is under provided coordinates
@@ -35,13 +45,17 @@ UIDesignBase = class
     local worldPosition = Camera.ToWorldCoords(x, y)
     
     // check all entities
+    this.DeselectUnit()
+    
     for i = 0 to Config.EntitiesMaxCount-1
       if this.Scene.Entities[i] != 0 then
         local transform = this.Scene.Components.GetTransform(i)
         if transform != 0 then
           local distance = transform.Position.ChebyshevDistance(worldPosition)
           if distance < HitDistance then 
-            Debug.Log("UNIT CLICKED!")
+
+            this.SelectUnit(i)
+            
             return
           end
         end
@@ -53,7 +67,7 @@ UIDesignBase = class
     local MapSpriteComponent = Scene.GetMap()
     if MapSpriteComponent != 0 then
       // get ref to map object
-      local map = maps[MapSpriteComponent.Name + "/ground"] // TODO: add support for other layers
+      local map = maps[MapSpriteComponent.Name + "/ground"]
       
       // translate world space to map space
       local mapPosition = new Vector(
@@ -70,5 +84,17 @@ UIDesignBase = class
     else
       Debug.Error("Unable to get reference to Map Sprite Component. Is this a scene without a map?")
     end
+  end
+  
+//// SelectUnit stores the reference to the unit with provided Entity Id as 'selected'
+  // @entityId:int - id of entity that represents selected unit
+  SelectUnit = function(entityId)
+    Debug.Log("Selecting Unit ID: " + entityId)
+    this.SelectedUnitId = entityId
+  end
+  
+//// DeselectUnit clears reference to a unit with 'selected' status
+  DeselectUnit = function()
+    this.SelectedUnitId = -1
   end
 end

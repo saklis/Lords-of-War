@@ -180,8 +180,11 @@ ViewportRenderer = class
       end
     end
     
+    // draw UI
+    Scene.Current.UI.Draw()
+    
     // draw debug info on top of everything
-    if Config.Debug then
+    if Config.DebugCamera then
       // draw rendering stats
       screen.drawText("Rendering tasks: "+renderingTaskCount, -100, 95, 6, "rgb(255,255,255)")
       // draw Culling Distance

@@ -3,6 +3,7 @@ Config = object
   
   // Display debug information in console and on the screen
   Debug = true
+  DebugCamera = false
   
   // Name of the scene that will be loaded as default
   DefaultSceneClass = "CameraTest"
