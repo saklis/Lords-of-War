@@ -91,27 +91,27 @@ ViewportRenderer = class
             
               // add new task to rendering queue
               this.RenderingQueue.AddTask(
-                                          RenderTaskType.Unit, 
-                                          new RenderingTask(
-                                                            spriteComponent.Name, 
-                                                            new Vector(localPosition.X, localPosition.Y)))
+                RenderTaskType.Unit, 
+                new RenderingTask(
+                  spriteComponent.Name, 
+                  new Vector(localPosition.X, localPosition.Y)))
             end
           end
           
           // case MAP
           if SpriteType.Map == spriteComponent.Type then
             // get map object for ground layer
-            local mapName = spriteComponent.Name + "/ground"
-            local map = maps[mapName]
-            if map != 0 then
+            local ground = maps[spriteComponent.Name + "/ground"]
+            local terrain = maps[spriteComponent.Name + "/terrain"]
+            if ground != 0 then
               // translate camera's World Space lcoation into Map Space
               local cameraMapPosition = new Vector(
-                  floor(this.Position.X / map.block_width) + spriteComponent.HalfMapWidth,
-                  floor(this.Position.Y / map.block_height) + spriteComponent.HalfMapHeight
+                  floor(this.Position.X / ground.block_width) + spriteComponent.HalfMapWidth,
+                  floor(this.Position.Y / ground.block_height) + spriteComponent.HalfMapHeight
                 )
                                                   
               // calcualte culling range in Map Blocks
-              local mapCullDistance = this.CullingDistance / map.block_width
+              local mapCullDistance = this.CullingDistance / ground.block_width
               
               local minX = ceil(cameraMapPosition.X - mapCullDistance)
               local maxX = ceil(cameraMapPosition.X + mapCullDistance)
@@ -122,25 +122,36 @@ ViewportRenderer = class
               for x = minX to maxX by 1
                 for y = minY to maxY by 1
                   
-                  // try getting sprite name
-                  local spriteName = map.get(x, y)
+                  // try getting sprite names
+                  local groundSpriteName = ground.get(x, y)
+                  local terrainSpriteName = terrain.get(x, y)
+                  
+                  // calculate tile's world position. Based on ground, since it's map's foundation
+                  local tileWorldPosition = new Vector(
+                    (x * ground.block_width) - spriteComponent.HalfMapWidthUnits,
+                    (y * ground.block_height) - spriteComponent.HalfMapHeightUnits)
+                    
+                  // calculate camera's local position (relative to the viewport)
+                  local localPosition = tileWorldPosition - this.Position
                   
                   // if sprite under coords exists...
-                  if spriteName != 0 then
-                    // calculate tile's world position
-                    local tileWorldPosition = new Vector(
-                                                          (x * map.block_width) - spriteComponent.HalfMapWidthUnits,
-                                                          (y * map.block_height) - spriteComponent.HalfMapHeightUnits)
-                                                        
-                    // calculate camera's local position (relative to the viewport)
-                    local localPosition = tileWorldPosition - this.Position
-                    
-                    // add new task to rendering queue
+                  if groundSpriteName != 0 then
                     this.RenderingQueue.AddTask(
-                                                RenderTaskType.Ground, 
-                                                new RenderingTask(
-                                                                  spriteName, 
-                                                                  new Vector(localPosition.X, localPosition.Y)))
+                      // add ground rendering task to the queue
+                      RenderTaskType.Ground, 
+                      new RenderingTask(
+                        groundSpriteName, 
+                        new Vector(localPosition.X, localPosition.Y)))
+                  end
+                  
+                  // if terrain sprite under coords exists...
+                  if terrainSpriteName != 0 then
+                    // add terrain rendering task to the queue
+                    this.RenderingQueue.AddTask(
+                      RenderTaskType.Terrain, 
+                      new RenderingTask(
+                        terrainSpriteName, 
+                        new Vector(localPosition.X, localPosition.Y)))
                   end
                   
                 end

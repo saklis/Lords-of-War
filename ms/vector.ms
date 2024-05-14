@@ -49,6 +49,6 @@ Vector = class
 //// ToString returns a string representation of the Vector
   // @returns string representing the Vector
   ToString = function()
-    return "X: " + this.X + "; Y: " + this.Y
+    return "{" + this.X + "; " + this.Y + "}"
   end
 end

@@ -5,6 +5,7 @@ RenderingTaskQueue = class
   constructor = function()
     this.Units = []
     this.Grounds = []
+    this.Terrains = []
   
     Debug.Info("Rendering Task Queue created")
   end
@@ -20,6 +21,9 @@ RenderingTaskQueue = class
     if RenderTaskType.Ground == taskType then
       this.Grounds.push(newTask)
     end
+    if RenderTaskType.Terrain == taskType then
+      this.Terrains.push(newTask)
+    end
     // end switch
   end
   
@@ -30,6 +34,13 @@ RenderingTaskQueue = class
       local current = this.Grounds.length - 1
       local task = this.Grounds[current]
       this.Grounds.removeAt(current)
+      return task
+    end
+    
+    if this.Terrains.length > 0 then
+      local current = this.Terrains.length - 1
+      local task = this.Terrains[current]
+      this.Terrains.removeAt(current)
       return task
     end
     
@@ -46,7 +57,7 @@ RenderingTaskQueue = class
 //// Has Tasks returns true, if queue has more tasks to process
   // @returns true if there's more tasks. False otherwise
   HasTasks = function()
-    if this.Units.length > 0 or this.Grounds.length > 0 then 
+    if this.Units.length > 0 or this.Grounds.length > 0 or this.Terrains.length > 0 then 
       return true
     else 
       return false
@@ -55,12 +66,13 @@ RenderingTaskQueue = class
   
 //// Count returns a number of Rendering Tasks in all lists
   Count = function()
-    return (this.Grounds.length + this.Units.length)
+    return (this.Grounds.length + this.Units.length + this.Terrains.length)
   end
   
 //// Clear removes all Rendering Tasks
   Clear = function()
     this.Units.clear()
     this.Grounds.clear()
+    this.Terrains.clear()
   end
 end

@@ -8,16 +8,16 @@ CameraTestScene = class extends SceneBase
     this.Name = "CameraTest"
     
     DEBUG_MakeMap()
-    DEBUG_MakeUnit(0, 0)
-    DEBUG_MakeUnit(20, 30)
-    // DEBUG_MakeUnit(-30, -20)
-    // DEBUG_MakeUnit(-15, 25)
+    DEBUG_MakeUnit(0, 0, "unit1")
+    DEBUG_MakeUnit(16, 32, "unit2")
+    DEBUG_MakeUnit(-48, -48, "unit3")
+    DEBUG_MakeUnit(32, -32, "unit4")
     // DEBUG_MakeUnit(40, -20)
     
     this.AddUIDesign(new TestUiDesign())
   end
   
-  DEBUG_MakeUnit = function(x, y)
+  DEBUG_MakeUnit = function(x, y, spriteName)
     local entityId = this.AddEntity("MyEntity")
     
     this.AddComponent(entityId, TransformComponent)
@@ -28,7 +28,7 @@ CameraTestScene = class extends SceneBase
     this.AddComponent(entityId, SpriteComponent)
     local sprite = this.Components.GetSprite(entityId)
     
-    sprite.InitAsUnit("unit")
+    sprite.InitAsUnit(spriteName)
   end
   
   DEBUG_MakeMap = function()

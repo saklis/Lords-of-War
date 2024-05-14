@@ -16,7 +16,7 @@ TestUiDesign = class extends UIDesignBase
     
     if this.SelectedUnitId != -1 then
       local spriteComponent = Scene.Components.GetSprite(this.SelectedUnitId)
-      screen.drawSprite(spriteComponent.Name, 180-40, 0, 48)
+      screen.drawSprite(spriteComponent.Name, 180-45, 0, 48)
     end
   end
   
