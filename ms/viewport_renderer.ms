@@ -7,9 +7,9 @@ ViewportRenderer = class
     this.Position = new Vector(0, 0)
     
     // distance from Position at which Entities won't be drawn anymore
-    this.CullingDistance = 60
+    this.CullingDistance = 150
     
-    // flag deciding if camera is allowed to move
+    // flag deciding if camera is allowed to move. Static camera will be used in menu scenes
     this.EnableMovement = true
     
     // camera's pan speed
@@ -193,6 +193,12 @@ ViewportRenderer = class
     
     // draw UI
     Scene.Current.UI.Draw()
+    
+    // draw debug info for world, if enabled
+    if Config.DebugWorld then
+      // mark center of the world
+      screen.fillRect(-this.Position.X, -this.Position.Y, 5, 5, "rgb(255,0,255)")
+    end
     
     // draw debug info on top of everything
     if Config.DebugCamera then

@@ -86,11 +86,23 @@ SceneBase = class
   end
   
 //// AddUIDesign registers the providded UI Design as UI for this scene.
-  // @uiDesign : UIDesignBase - reference to UI Design object that will handele UI for this scene
+  // @uiDesign:UIDesignBase - reference to UI Design object that will handele UI for this scene
   AddUIDesign = function(uiDesign)
     this.UI = uiDesign
     this.UI.Scene = this
     Debug.Log("UI Design '"+this.UI.Name+"' added to scene '"+this.Name+"'.")
+  end
+  
+//// GenerateNavData initializes all data required for navigation based on supplied map name
+  // @mapName:string - name of the map that should be used to generate navigation data
+  GenerateNavData = function(mapName)
+    local groundName = mapName + "/ground"
+    local ground = maps[groundName]
+    
+    if ground != 0 then 
+      Debug.Log("Generating nav data for: " + mapName)
+      
+    else Debug.Error("Generation of nav data failed! Map " + mapName + " not found") end
   end
 
 end

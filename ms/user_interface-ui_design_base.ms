@@ -13,37 +13,43 @@ UIDesignBase = class
     // distance below which Entity is considered "hit"
     this.HitDistance = 9
     
-    // width of the UI panel.
-    this.UiWidth = 0
+    // walue on X axis (in Camera Space) from where the UI area starts
+    this.UiBorderX = 50
+    
+    // List of Controls in this scene. Elements must extend ControlBase
+    this.Controls = []
     
     this.SelectedUnitId = -1
   end
   
 //// Update state of the UI Design
   Update = function()
+    // mouse left button clicked
     if mouse.press == 1 and mouse.left == 1 then
       local hitInfo = HitTrace(mouse.x, mouse.y)
       
       // switch by hitInfo.Type
       
+      // User interface
+      if HitInfoType.UI == hitInfo.Type then
+        Debug.Log("Clicked! Type: " + hitInfo.Type)
+      end
+      
       // Unit
       if HitInfoType.Unit == hitInfo.Type then
-        Debug.Log("Clicked! Type: " + hitInfo.Type + "; Entity ID: " + hitInfo.Object + "; Hit World position: " + hitInfo.HitWorldPosition.ToString())
+        Debug.Log("Clicked! Type: " + hitInfo.Type + "; Entity ID: " + hitInfo.Object + "; Hit world pos: " + hitInfo.HitWorldPosition.ToString())
         // select unit
         this.SelectUnit(hitInfo.Object)
-      else
-        // deselect unit
-        this.SelectUnit(-1)
       end
       
       // Terrain
       if HitInfoType.Terrain == hitInfo.Type then
-        Debug.Log("Clicked! Type: " + hitInfo.Type + "; Terrain tile: " + hitInfo.Object + "; Hit World position: " + hitInfo.HitWorldPosition.ToString())
+        Debug.Log("Clicked! Type: " + hitInfo.Type + "; Terrain tile: " + hitInfo.Object + "; Hit world pos: " + hitInfo.HitWorldPosition.ToString())
       end
       
       // Ground
       if HitInfoType.Ground == hitInfo.Type then
-        Debug.Log("Clicked! Type: " + hitInfo.Type + "; Ground tile: " + hitInfo.Object + "; Hit World position: " + hitInfo.HitWorldPosition.ToString())
+        Debug.Log("Clicked! Type: " + hitInfo.Type + "; Ground tile: " + hitInfo.Object + "; Hit world pos: " + hitInfo.HitWorldPosition.ToString())
       end
       
       // switch end
@@ -52,7 +58,11 @@ UIDesignBase = class
   
 //// Draw draws UI
   Draw = function()
-    screen.fillRect(180 - this.UiWidth / 2 - 10, 0, this.UiWidth, 190, "rgb(255,0,255)")
+    if Config.DebugUI then
+      local width = 180 - this.UiBorderX
+      local centerX = this.UiBorderX + width  / 2
+      screen.fillRect(centerX, 0, width, 200, "rgb(255,0,255)")
+    end
     
     screen.drawSprite("ui/mouse_cursor", mouse.x+4, mouse.y-4, 8, 8) // +4 and -4 offset sprite to point at upper/left corner
   end
@@ -66,15 +76,16 @@ UIDesignBase = class
     
     // CHECK UI
     
-    // TODO: handle clicking on UI and move to game world only if not clicking on UI
+    if x >= this.UiBorderX then
+      hitInfo.Type = HitInfoType.UI
+      return hitInfo
+    end
     
     // CHECK ENTITIES IN GAME WORLD
     
     local worldPosition = Camera.ToWorldCoords(x, y)
     
     // check all entities
-    this.DeselectUnit()
-    
     for i = 0 to Config.EntitiesMaxCount-1
       if this.Scene.Entities[i] != 0 then
         local transform = this.Scene.Components.GetTransform(i)
@@ -125,7 +136,7 @@ UIDesignBase = class
         return hitInfo
       end
     else
-      Debug.Error("Unable to get reference to Map Sprite Component. Is this a scene without a map?")
+      Debug.Error("Unable to get reference to Map Sprite Component. Is this a scene without a map?!")
     end
     
     return hitInfo

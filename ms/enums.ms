@@ -21,4 +21,5 @@ HitInfoType = object
   Ground = "ground"
   Terrain = "terrain"
   Unit = "unit"
+  UI = "ui"
 end

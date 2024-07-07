@@ -3,8 +3,10 @@ Config = object
   
   // Display debug information in console and on the screen
   Debug = true
-  DebugShowDefaultMouseCursor = false
-  DebugCamera = false
+  DebugShowDefaultMouseCursor = true
+  DebugCamera = true
+  DebugUI = true
+  DebugWorld = true
   
   // Name of the scene that will be loaded as default
   DefaultSceneClass = "CameraTest"

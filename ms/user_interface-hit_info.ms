@@ -11,7 +11,7 @@ HitInfo = class
     // Attention! Check this.Type to know what is the type of the referenced object!
     this.Object = 0
     
-    // position of a thing that was hit in World Space
-    this.WorldPosition = 0
+    // Coordinates of the Hit in World Space
+    this.HitWorldPosition = 0
   end
 end

@@ -7,7 +7,7 @@ TestUiDesign = class extends UIDesignBase
     
     this.Name = "Test UI Design"
     
-    this.UiWidth = 75
+    this.UiBorderX = 100
   end
   
 //// Draw draws UI
