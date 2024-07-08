@@ -82,6 +82,8 @@ NavigationManager = class
     
     local astar = new AStar(this.NavGrid)
     local path =  astar.FindPath(mapStart, mapGoal, movementType)
+    
+    // if path exists, return list of vectors in world space
     if path != 0 then
       local worldPath = []
       for node in path

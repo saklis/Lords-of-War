@@ -78,9 +78,11 @@ AStar = class
     
     local currentNode = lastNode
     while currentNode != 0
-      path.insertAt(currentNode, 0)
+      path.push(currentNode)
       currentNode = currentNode.Parent
     end
+    
+    path.reverse()
     
     return path
   end

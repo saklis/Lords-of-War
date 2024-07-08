@@ -52,19 +52,13 @@ UIDesignBase = class
       if HitInfoType.Ground == hitInfo.Type then
         Debug.Log("Clicked! Type: " + hitInfo.Type + "; Ground tile: " + hitInfo.Object + "; Hit world pos: " + hitInfo.HitWorldPosition.ToString())
         
-        // start map coords
-        local transformComponent = Scene.Components.GetTransform(this.SelectedUnitId)
-        
-        local path = this.Scene.Navigator.FindPath(transformComponent.Position, hitInfo.HitWorldPosition, MovementType.Walk)
-        if path == 0 then
-          Debug.Log("No path to target")
-        else
-          Debug.Log("Path:")
-          for i = 0 to path.length-1
-            Debug.Log(i + ". " + path[i].X + ", " + path[i].Y)
-          end
+        if this.SelectedUnitId >= 0 then
+          // calculate path from selected unit to clicked tile
+          local transformComponent = Scene.Components.GetTransform(this.SelectedUnitId)
+          this.Path = this.Scene.Navigator.FindPath(transformComponent.Position, hitInfo.HitWorldPosition, MovementType.Walk)
+          
+          if this.Path == 0 then Debug.Log("No valid path to target.") end
         end
-        this.Path = path
       end
       
       // switch end
