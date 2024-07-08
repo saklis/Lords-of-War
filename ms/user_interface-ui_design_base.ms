@@ -20,6 +20,7 @@ UIDesignBase = class
     this.Controls = []
     
     this.SelectedUnitId = -1
+    this.Path = 0
   end
   
 //// Update state of the UI Design
@@ -50,6 +51,20 @@ UIDesignBase = class
       // Ground
       if HitInfoType.Ground == hitInfo.Type then
         Debug.Log("Clicked! Type: " + hitInfo.Type + "; Ground tile: " + hitInfo.Object + "; Hit world pos: " + hitInfo.HitWorldPosition.ToString())
+        
+        // start map coords
+        local transformComponent = Scene.Components.GetTransform(this.SelectedUnitId)
+        
+        local path = this.Scene.Navigator.FindPath(transformComponent.Position, hitInfo.HitWorldPosition, MovementType.Walk)
+        if path == 0 then
+          Debug.Log("No path to target")
+        else
+          Debug.Log("Path:")
+          for i = 0 to path.length-1
+            Debug.Log(i + ". " + path[i].X + ", " + path[i].Y)
+          end
+        end
+        this.Path = path
       end
       
       // switch end
@@ -59,9 +74,17 @@ UIDesignBase = class
 //// Draw draws UI
   Draw = function()
     if Config.DebugUI then
+      // draw UI background
       local width = 180 - this.UiBorderX
       local centerX = this.UiBorderX + width  / 2
       screen.fillRect(centerX, 0, width, 200, "rgb(255,0,255)")
+      
+      // draw path
+      if this.Path != 0 then
+        for node in this.Path
+          screen.drawRect(node.X - Camera.Position.X, node.Y - Camera.Position.Y, 16, 16, "rgb(255,255,255)")
+        end
+      end
     end
     
     screen.drawSprite("ui/mouse_cursor", mouse.x+4, mouse.y-4, 8, 8) // +4 and -4 offset sprite to point at upper/left corner

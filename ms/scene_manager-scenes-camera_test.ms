@@ -45,7 +45,7 @@ CameraTestScene = class extends SceneBase
     local sprite = this.Components.GetSprite(entityId)
     
     sprite.InitAsMap("myfirstmap")
-    this.GenerateNavData("myfirstmap")
+    this.Navigator.GenerateNavData("myfirstmap")
   end
   
 end

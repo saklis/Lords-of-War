@@ -71,8 +71,8 @@ RenderingTaskQueue = class
   
 //// Clear removes all Rendering Tasks
   Clear = function()
-    this.Units.clear()
-    this.Grounds.clear()
-    this.Terrains.clear()
+    this.Units = [] // clear
+    this.Grounds = [] // clear
+    this.Terrains = [] // clear
   end
 end

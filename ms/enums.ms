@@ -23,3 +23,10 @@ HitInfoType = object
   Unit = "unit"
   UI = "ui"
 end
+
+// Types of movements
+MovementType = object
+  Walk = "walk"
+  Swim = "swim"
+  Fly = "fly"
+end
