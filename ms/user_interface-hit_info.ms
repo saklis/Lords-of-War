@@ -13,5 +13,8 @@ HitInfo = class
     
     // Coordinates of the Hit in World Space
     this.HitWorldPosition = 0
+    
+    // Coordinates of the Hit in Map Space
+    this.HitMapPosition = 0
   end
 end

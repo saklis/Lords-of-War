@@ -16,8 +16,7 @@ ViewportRenderer = class
     this.MovementSpeed = 0.4
     
     // value of mouse.x and mouse.y that trigger camera movement
-    // TODO: figure out best numbers based on the screen's size
-    this.MouseMoveThreshold = new Vector(140, 80)
+    this.MouseMoveThreshold = new Vector(screen.width / 2 - 3, screen.height / 2 - 3)
     
     // Handle rendering tasks for current frame
     this.RenderingQueue = new RenderingTaskQueue()

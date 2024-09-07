@@ -29,6 +29,8 @@ CameraTestScene = class extends SceneBase
     local sprite = this.Components.GetSprite(entityId)
     
     sprite.InitAsUnit(spriteName)
+    
+    this.AddComponent(entityId, ControllerComponent)
   end
   
   DEBUG_MakeMap = function()

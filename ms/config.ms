@@ -6,7 +6,7 @@ Config = object
   DebugShowDefaultMouseCursor = true
   DebugCamera = true
   DebugUI = true
-  DebugWorld = true
+  DebugWorld = false
   
   // Name of the scene that will be loaded as default
   DefaultSceneClass = "CameraTest"

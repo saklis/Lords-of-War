@@ -98,4 +98,17 @@ NavigationManager = class
     end
   end
   
+//// GetWorldFromMapSpace returns a Vector with position in World Space calculated from supplied Map Space coords.
+  // @mapPosition:Vector - position in Map Sapce
+  // returns:Vector - position in World Space
+  GetWorldFromMapSpace = function(mapPosition)
+    local map = maps[this.MapName + "/ground"]
+    local halfMapWidthUnits = map.width * map.block_width / 2
+    local halfMapHeightUnits = map.height * map.block_height / 2
+    
+    return nodeWorldPosition = new Vector(
+          (mapPosition.X * map.block_width) - halfMapWidthUnits,
+          (mapPosition.Y * map.block_height) - halfMapHeightUnits)
+  end
+  
 end

@@ -20,7 +20,6 @@ UIDesignBase = class
     this.Controls = []
     
     this.SelectedUnitId = -1
-    this.Path = 0
   end
   
 //// Update state of the UI Design
@@ -53,11 +52,31 @@ UIDesignBase = class
         Debug.Log("Clicked! Type: " + hitInfo.Type + "; Ground tile: " + hitInfo.Object + "; Hit world pos: " + hitInfo.HitWorldPosition.ToString())
         
         if this.SelectedUnitId >= 0 then
-          // calculate path from selected unit to clicked tile
-          local transformComponent = Scene.Components.GetTransform(this.SelectedUnitId)
-          this.Path = this.Scene.Navigator.FindPath(transformComponent.Position, hitInfo.HitWorldPosition, MovementType.Walk)
-          
-          if this.Path == 0 then Debug.Log("No valid path to target.") end
+          local controller = Scene.Components.GetController(this.SelectedUnitId)
+          if controller != 0 then
+            // check if unit's path already ends on the clicked field
+            if controller.CurrentPath != 0 then
+              local lastNode = controller.CurrentPath[controller.CurrentPath.length - 1]
+              if lastNode != 0 then
+                local clickedNode = this.Scene.Navigator.GetWorldFromMapSpace(hitInfo.HitMapPosition)
+                if lastNode.X == clickedNode.X and lastNode.Y == clickedNode.Y then
+                  Debug.Log("Clicked on last node in the path! Move now...")
+                  controller.Move()
+                  return
+                end
+              end
+            end
+            // no current path
+            // calculate path from selected unit to clicked tile
+            local transformComponent = Scene.Components.GetTransform(this.SelectedUnitId)
+            local path = this.Scene.Navigator.FindPath(transformComponent.Position, hitInfo.HitWorldPosition, MovementType.Walk)
+            if path == 0 then Debug.Log("No valid path to target.") 
+            else 
+              if controller != 0 then
+                controller.CurrentPath = path
+              end
+            end
+          end
         end
       end
       
@@ -74,9 +93,15 @@ UIDesignBase = class
       screen.fillRect(centerX, 0, width, 200, "rgb(255,0,255)")
       
       // draw path
-      if this.Path != 0 then
-        for node in this.Path
-          screen.drawRect(node.X - Camera.Position.X, node.Y - Camera.Position.Y, 16, 16, "rgb(255,255,255)")
+      if this.SelectedUnitId >= 0 then
+        local controller = Scene.Components.GetController(this.SelectedUnitId)
+        if controller != 0 then
+          if controller.CurrentPath != 0 then
+            for node in controller.CurrentPath
+              //screen.drawRect(node.X - Camera.Position.X, node.Y - Camera.Position.Y, 16, 16, "rgb(255,255,255)")
+              screen.drawSprite("ui/movepathnode", node.X - Camera.Position.X, node.Y - Camera.Position.Y, 16, 16)
+            end
+          end
         end
       end
     end
@@ -132,6 +157,7 @@ UIDesignBase = class
         MapSpriteComponent.HalfMapWidth + floor(worldPosition.X / ground.block_width + 0.5),
         MapSpriteComponent.HalfMapHeight +  floor(worldPosition.Y / ground.block_height + 0.5)
       )
+      hitInfo.HitMapPosition = mapPosition
       
       // check terrain layer  
       local terrainSpriteName = terrain.get(mapPosition.X, mapPosition.Y)

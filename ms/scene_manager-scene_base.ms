@@ -83,7 +83,10 @@ SceneBase = class
     // update entities/components
     for i = 0 to Config.EntitiesMaxCount-1
       if this.Entities[i] != 0 then
-        // update all components
+        local controller = Components.GetController(i)
+        if controller != 0 then
+          controller.Update()
+        end
       end
     end
   end

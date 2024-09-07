@@ -10,6 +10,9 @@ ComponentManager = class
     // Sprite components
     this.Sprites = []
     
+    // Controller components
+    this.Controllers = []
+    
     // Cashes reference to map Sprite Component
     this.Map = 0
     
@@ -19,6 +22,7 @@ ComponentManager = class
     for i = 0 to Config.EntitiesMaxCount-1
       this.Transforms.push(0)
       this.Sprites.push(0)
+      this.Controllers.push(0)
     end
   end
   
@@ -28,12 +32,17 @@ ComponentManager = class
   CreateComponent = function(entityId, componentClass)
     // is Transform Component
     if TransformComponent == componentClass then
-      this.Transforms[entityId] = new TransformComponent()
+      this.Transforms[entityId] = new TransformComponent(entityId)
     end
     
     // is Sprite Component
     if SpriteComponent == componentClass then
-      this.Sprites[entityId] = new SpriteComponent()
+      this.Sprites[entityId] = new SpriteComponent(entityId)
+    end
+    
+    // is Controller Component
+    if ControllerComponent == componentClass then
+      this.Controllers[entityId] = new ControllerComponent(entityId)
     end
   end
   
@@ -42,11 +51,13 @@ ComponentManager = class
   CountAll = function()
     local transformsCount = 0
     local spritesCount = 0
+    local controllersCount = 0
     for i = 0 to Config.EntitiesMaxCount-1
       if this.Transforms[i] != 0 then transformsCount += 1 end
       if this.Sprites[i] != 0 then spritesCount += 1 end
+      if this.Controllers[i] != 0 then controllersCount += 1 end
     end
-    return transformsCount + spritesCount
+    return transformsCount + spritesCount + controllersCount
   end
   
 //// GetTransform returns Transform Component for Entity with provided Id.
@@ -61,6 +72,13 @@ ComponentManager = class
   // @returns Sprite Component of the Entity
   GetSprite = function(entityId)
     return this.Sprites[entityId]
+  end
+  
+//// GetController returns Controller Component for Entity with provided Id.
+  // @entityId:int - Id of Entity
+  // @returns Controller Component of the Entity
+  GetController = function(entityId)
+    return this.Controllers[entityId]
   end
   
 //// GetMap returns a reference to map's Sprite Component. If there's more than one, first will be returned.

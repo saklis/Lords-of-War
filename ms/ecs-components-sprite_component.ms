@@ -1,9 +1,10 @@
 // Component that hold info about sprite to be rendered
 SpriteComponent = class extends ComponentBase
   
-//// constructor creates new instance of Sprite Component
-  constructor = function()
-    super()
+//// construct new instance
+  // @entityId:int - Id of the Entity this component belong to
+  constructor = function(entityId)
+    super(entityId)
     
     // Name of the sprite file to display
     this.Name = ""

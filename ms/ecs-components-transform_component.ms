@@ -1,9 +1,10 @@
 // Component that hold info about position rotation and scale in the scene
 TransformComponent = class extends ComponentBase
   
-//// constructor creates new instance of Transform Component
-  constructor = function()
-    super()
+//// construct new instance
+  // @entityId:int - Id of the Entity this component belong to
+  constructor = function(entityId)
+    super(entityId)
     
     // Position in the scene
     this.Position = new Vector(0, 0)
